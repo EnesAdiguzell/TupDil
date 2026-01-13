@@ -2,7 +2,7 @@ output = ""
 def main():
     # DO NOT CHANGE
     global output
-    handle = open('input10.tup')
+    handle = open('input.tup')
     code = handle.read()
     handle.close()
 
@@ -15,7 +15,6 @@ def main():
     result = ""
     ce = []
 
-    #digit control depending on comma
     for rmp in range(len(welcome_list)):
        jnk = welcome_list[rmp].split()
        for mem in jnk:
@@ -41,9 +40,8 @@ def main():
            if len(vir[1]) > 3:
               ce.append(rmp + 1)
 
-
     
-     #removing dot to implementing in python
+
 
     for m in range(len(welcome_list)):
       processed_text = []
@@ -59,7 +57,6 @@ def main():
     temp_sözlük = {}
     sözlük = {}
     işlem = [ "çarp",  "bölü", "artı", "eksi"]
-    işlem_a = [ "çarp", "artı", "eksi"]
     alphabet = ["a", "b", "c", "ç", "d", "e", "f", "g" ,"ğ", 
                 "h", "ı", "i", "j", "k", "l", "m", "n", "o", "ö", "p", "r"
                 "s", "ş", "t", "u", "ü", "v", "y", "z"]
@@ -71,57 +68,15 @@ def main():
     toplam = []
     tip_ce = []
 
-
-    # controlling to digit
-    def digit_control(sayi,i):
-     try:
-        # Sayıyı stringe çevir
-        sayi_str = str(sayi)
-
-        # Nokta ile ayır ve tam kısmı ve kesir kısmını al
-        tam_kisim, kesir_kisim = (sayi_str.split('.') + [""])[:2]  # Kesir yoksa boş dizi ekle
-
-        # Tam kısmın uzunluğunu kontrol et (negatif işareti varsa çıkar)
-        tam_kisim = tam_kisim.lstrip('-')  # Negatif işareti kaldır
-        if len(tam_kisim) > 5:
-            rte.append(i + 1)
-            return  False # Tam kısım 5 basamaktan uzun olmamalı
-
-        # Kesir kısmın uzunluğunu kontrol et
-        if len(kesir_kisim) > 3:
-            rte.append(i + 1)
-            return False  # Kesir kısım 3 basamaktan uzun olmamalı
-
-        return True
-     except Exception as e:
-         rte.append(i + 1)
-         return False
-
     for i in range(len(welcome_list)):
      row = welcome_list[i].split()
      nk = welcome_list[i].split("!")
-     # determination of interval
-     for let in row:
-        ali = str(let).replace(",",".")
-        try:
-           if not -10001 < float(ali) < 10001:
-              ce.append(i + 1)
-        except: None
-        meh = str(ali).split(".")
-        for m in meh:
-           if m.isdigit():
-              if len(meh) == 3 :
-               if (len(meh[0]) > 0 and len(meh[1]) != 3) or len(meh[2]) > 3:
-                 ce.append(i + 1)
-           else:break
 
      
-           
+
      if "değeri" in row and "olsun." not in row:
         ce.append(i+ 1)
-
-
-        # space control
+        
      if "  " in welcome_list[i]:
       if len(nk) == 3:
          if "  " in nk[0] or "  " in nk[2]:
@@ -135,7 +90,7 @@ def main():
          ce.append(i + 1)
 
      try:
-      # making new version related turkish alphabet and restriction
+
       if row[-1] == "olsun." and row[1] == "bir" :
          if True == True:
             for lmk in list(row[0]):
@@ -152,8 +107,8 @@ def main():
             ce.append(i + 1)
           
      except: None
-     #counting for value assignment
-     try: 
+
+     try:
       if row[2] == "tam-sayı":
         tam.append(row[0])
         if row[0] in metin:
@@ -176,29 +131,15 @@ def main():
         None
         
      try: 
-         # controlling print operation
          if row[-1] == "yazdır.":
             if "değeri" in row or "olsun." in row or "zıpla." in row or "bir" in row:
                ce.append(i + 1)
-            for jk in range(len(row) - 1):
-               if row[jk] in işlem_a and len(row) > 3:
+            for jk in range(len(row)):
+               if row[jk] in işlem:
                 if "," in row[jk - 1] and "," not in row[jk + 1]:
                   ce.append(i + 1)
                 elif "," not in row[jk - 1] and "," in row[jk + 1]:
                   ce.append(i + 1)
-                if "!" in row[jk-1 ] or "!" in row[jk + 1]:
-                  try:
-                     float(row[jk - 1].replace(",", ".").replace("!",""))
-                     re = True
-                  except:
-                     re = False
-                  try:
-                     float(row[jk + 1].replace(",", ".").replace("!",","))
-                     ra = True
-                  except:
-                     ra = False
-                  if ra != re:
-                     ce.append(i + 1)
      except: None
 
 
@@ -214,7 +155,7 @@ def main():
               except:
                  None
               
-          # float checking
+
            if row[0] in reel:
               if "," not in row[2] :
                  try:
@@ -226,7 +167,7 @@ def main():
                 if len(before_dot) > 5 or len(after_dot) > 3 :
                      ce.append(i + 1)
               except: None
-          # exclamations checking
+
            if row[0] in metin and ("artı" not in row and "eksi" not in row and "çarp" not in row and "bölü" not in row):
               m = welcome_list[i].split("!")
               try:
@@ -236,7 +177,7 @@ def main():
                  ce.append(i + 1)
               except:None
 
-       #counting exclamtions for bonding a relation with number of sentences
+
         elif len(row) > 4 and row[0] not in metin and (row[0] in tam or row[0] in reel) :  
           if "artı" not in row and "eksi" not in row and "çarp" not in row and "bölü" not in row:
              ce.append(i + 1)
@@ -248,7 +189,6 @@ def main():
           if len(row) != ok:
             ce.append(i + 1)
 
-         # type checking
           if row[0] in tam :
               for nn in range(len(row)):
                  if row[nn] in işlem:
@@ -301,14 +241,12 @@ def main():
      if row[-1] == "olsun.":
         if "bir" not in row and "değeri" not in row:
             ce.append(i + 1)
-    # jump checking
      if row[-1] == "zıpla.":
         if row[-2] != "satıra" or "." not in row[-3]:
             ce.append(i + 1)
-        for com in range(len(row)):
-           if "," in row[com]:
+        for com in row:
+           if "," in com:
               ce.append(i + 1)
-
               
      for h in range(len(row)):
       if row[0] != "metin":
@@ -354,14 +292,13 @@ def main():
      
                     
 
-      # converting punctuation for suitable for implementing           
+                  
 
     def virgül(y):
         return [i.replace(",", ".") for i in y]
     def nokta(y):
         return [i.replace(".", "") for i in y]
     
-     # format checking and get from dictioanry
     def işle_float(y, exp, sözlük):
       if y[exp - 1] in sözlük:
          first_operand = Decimal(sözlük[y[exp - 1]])
@@ -423,13 +360,35 @@ def main():
        else:
          return formatted_before
        
+    def digit_control(sayi,i):
+     try:
+        # Sayıyı stringe çevir
+        sayi_str = str(sayi)
+
+        # Nokta ile ayır ve tam kısmı ve kesir kısmını al
+        tam_kisim, kesir_kisim = (sayi_str.split('.') + [""])[:2]  # Kesir yoksa boş dizi ekle
+
+        # Tam kısmın uzunluğunu kontrol et (negatif işareti varsa çıkar)
+        tam_kisim = tam_kisim.lstrip('-')  # Negatif işareti kaldır
+        if len(tam_kisim) > 5:
+            rte.append(i + 1)
+            return  False # Tam kısım 5 basamaktan uzun olmamalı
+
+        # Kesir kısmın uzunluğunu kontrol et
+        if len(kesir_kisim) > 3:
+            rte.append(i + 1)
+            return False  # Kesir kısım 3 basamaktan uzun olmamalı
+
+        return True
+     except Exception as e:
+         rte.append(i + 1)
+         return False
+
+
     
-     
-
-
     i = 0
     while i < len(welcome_list):
-        # breaking loop thanks to a list CE
+        
         if ce:
           min_value = min(ce)
           output += f"Compile error at line {min_value}.\n"
@@ -437,13 +396,12 @@ def main():
         
 
         if welcome_list[0] != "programı başlat.":
-               output += f"CE at line {len(welcome_list) - 1}.\n"
+               output += "Compile error at line 1."
                break
         elif welcome_list[-1] != "programı bitir.":
-             output += f"CE at line {len(welcome_list) - 1}.\n"
+             output += f"Compile error at line {len(welcome_list) - 1}.\n"
              break
         else:
-             #doing procces for float
              y = welcome_list[i].split()
              if y[0] in temp_sözlük and temp_sözlük[y[0]] == "float" and y[-1] != "zıpla." and y[-1] != "yazdır.":
                 if ((("çarp" in y) or ("bölü" in y) or ("artı" in y) or ("eksi" in y))):
@@ -497,8 +455,6 @@ def main():
                     if "yazdır." in y:
                        output += f"{result}\n"
 
-             #doing proccess for integar
-
              if y[0] in temp_sözlük and temp_sözlük[y[0]] == "int" and y[-1] != "zıpla." and y[-1] != "yazdır.":
                 if ((("çarp" in y) or ("bölü" in y) or ("artı" in y) or ("eksi" in y))):
                     result = 0
@@ -508,8 +464,6 @@ def main():
                         if y[exp] in sözlük:
                            y[exp] = sözlük[y[exp]]
                     for exp in range(len(y)):
-                        if "," in str(y[2:-1]):
-                           rte.append(i + 1)
                         if y[exp] in işlem: 
                            try:
                                 first_operand, second_operand = işle_int(y, exp, sözlük)
@@ -529,13 +483,11 @@ def main():
                                 elif y[exp] == "eksi":
                                     result = first_operand - second_operand
                                     if not -10000 <= result <= 10000:
-                                       rte.append(i + 1)
+                                       rte.append(i +1)
                                 y[exp + 1] = result
                            except: 
                               continue
                     sözlük[y[0]] = result
-
-             # doing proccess for string
 
              if y[0] in temp_sözlük and temp_sözlük[y[0]] == "string" and y[-1] != "zıpla.":
                 if ("artı" in y) or ("eksi" in y) or ("çarp" in y) :
@@ -577,7 +529,7 @@ def main():
                     if len(list(result)) > 50:
                        rte.append(i + 1)
 
-             #assign values
+
              if "tam-sayı" in y and len(y) <= 4:
                 temp_sözlük[y[0]] = "int"
 
@@ -586,7 +538,7 @@ def main():
              
              elif "metin" in y and len(y) <= 4:
                 temp_sözlük[y[0]] = "string"
-            # for potential values
+
              elif "olsun." in y  and "tam-sayı" not in y and "reel-sayı" not in y and "metin" not in y and "artı" not in y and "eksi" not in y and "çarp" not in y and "bölü" not in y :
                     if y[0] in temp_sözlük:
                     # Eğer temp_sözlük'te tür bilgisi varsa, önceki türü kontrol et
@@ -611,7 +563,7 @@ def main():
                        except:
                            sözlük[y[0]] = str(y[2])
 
-             #jumping proccess
+
              elif "zıpla." in y:
                if len(y) == 3:
                  if str(y[-3]).replace(".", "") in sözlük.keys():
@@ -638,19 +590,18 @@ def main():
                         break
                   else:
                         i = a - 2
-                # jumping procedure
+               
                if len(y) > 3:
-                    result_final = 0
                     result_m = 0
                     y = virgül(y)
                     y = [item.strip('!') for item in y]
-                    if "." not in y[-3]:
-                       rte.append(i + 1)
                     y = nokta(y)
                     for exp in range(len(y)):
                         if y[exp] in sözlük:
                               y[exp] = sözlük[y[exp]]
                     for exp in range(len(y)):
+                        if "." not in str(y[exp]):
+                           rte.append(i + 1)
                         if y[exp] in işlem:
                             try:
                                 first_operand, second_operand = işle_float(y, exp, sözlük)
@@ -682,7 +633,7 @@ def main():
                                        rte.append(i + 1)
                                     if not -10001 < result_m < 10001:
                                        rte.append(i + 1)
-                                y[exp + 1] = result_m
+                                    y[exp + 1] = result_m
                                 result_final = result_m
                             except:
                                 continue
@@ -698,16 +649,16 @@ def main():
                                     break
                             else:
                                  i = int(result_final) - 2  
-             #printing procedure
+            
              elif "yazdır." in y and len(y) <= 2:
                if y[0] in sözlük.keys():
                    tp_a = sözlük[y[0]]
-                   pr_out = str(format_number(tp_a))
-                   output += f"{pr_out}\n"
+                   tpm = str(format_number(tp_a))
+                   output += f"{tpm}\n"
                else:
                    tp_a = y[0]
-                   pm_out = str(format_number(tp_a))
-                   output += f"{pm_out}\n"
+                   tpm = format_number(tp_a)
+                   output += f"{tpm}\n"
 
              elif "yazdır." in y and len(y) > 2:
                     a = ""
@@ -724,37 +675,48 @@ def main():
                                   rte.append(i+ 1)
                                   break
                                else:
-                                  try:
-                                   first_operand, second_operand = işle_string(y, exp, sözlük)
-                                   if y[exp] == "artı":
-                                      result = first_operand + second_operand
-                                   elif y[exp] == "eksi":
-                                     a = first_operand
-                                     b = second_operand
-                                     for z in b:
-                                       a = a.replace(z, "")
-                                       result = a
-                                   elif y[exp] == "çarp":
-                                      for rakam in rakamlar:
-                                        if rakam in y[exp - 1]:
-                                         result = int(y[(exp - 1)]) * second_operand
-                                        elif rakam in y[exp + 1]:
-                                          result = first_operand * int(y[exp + 1])
-                                   y[exp + 1] = result
-                                   result_p = result
-                                  except: 
-                                    continue
-                                  if len(list(result)) > 50:
-                                    rte.append(i + 1)
-                                  result_out = str(result_p)
-                                  output += f"{result_out}\n"
-                            else:
-                                  
-                             try:
-                              if "," not in str(y[exp -1]) and "," not in str(y[exp + 1]):
-                                  a = "tam"
-                             except:None
-                             try:
+                                    b = []
+                                    a = welcome_list[i].split("!")
+                                    for an in range(len(a)):
+                                       if an % 2 == 1:
+                                          b.append(a[an])
+                                       else:
+                                          y = a[an].split()
+                                          b.extend(y)
+                                    y = b
+                                    for exp in range(len(y)):
+                                          if y[exp] in işlem:
+                                             if y[exp] in sözlük:
+                                                y[exp] = sözlük[y[exp-1]] + sözlük[y[exp+1]]
+                                             try:
+                                                first_operand, second_operand = işle_string(y, exp, sözlük)
+                                                if y[exp] == "artı":
+                                                      result = first_operand + second_operand
+                                                elif y[exp] == "eksi":
+                                                      a = first_operand
+                                                      b = second_operand
+                                                      for z in b:
+                                                         a = a.replace(z, "")
+                                                      result = a
+                                                elif y[exp] == "çarp":
+                                                   for rakam in rakamlar:
+                                                      if rakam in y[exp - 1]:
+                                                         result = int(y[(exp - 1)]) * second_operand
+                                                      elif rakam in y[exp + 1]:
+                                                         result = first_operand * int(y[exp + 1])
+                                                y[exp + 1] = result
+                                             except: 
+                                                continue
+                                    sözlük[y[0]] = result
+                                    if len(list(result)) > 50:
+                                       rte.append(i + 1)
+                                   
+
+                            try:
+                             if "," not in str(y[exp -1]) and "," not in str(y[exp + 1]):
+                                 a = "tam"
+                            except:None
+                            try:
                                 y = virgül(y)
                                 first_operand, second_operand = işle_float(y, exp, sözlük)
                                 if y[exp] == "çarp":
@@ -787,17 +749,17 @@ def main():
                                        rte.append(i + 1)
                                     y[exp + 1] = result_p
                                 result_final_p = result_p
-                             except:
+                            except:
                                 continue
-                             if a == "tam":
+                            if a == "tam":
                                result_pt = str(format_number(int(result_final_p)))
                                output += f"{result_pt}\n"
-                             else:
+                            else:
                                result_ptt = str(format_number(result_final_p))
                                output += f"{result_ptt}\n"
 
         try:
-        #looking for assign if not there is a problem on assigning
+        
          for key in temp_sözlük:
             if key in temp_sözlük and sözlük[key] is None:
                rte.append(i + 1)
@@ -806,6 +768,8 @@ def main():
         if rte:
            output += f"Runtime error at line {i + 1}.\n"
            break
+        
+           
               
         i += 1
 
@@ -815,6 +779,7 @@ def main():
     handle = open('output.txt','w')
     handle.write(output)
     handle.close()
+    return sözlük
 
 main()
 
